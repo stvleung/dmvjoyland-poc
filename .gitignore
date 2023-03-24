@@ -1,0 +1,8 @@
+## Hugo ignores
+#
+# https://gohugo.io/news/0.89.0-relnotes/#notes
+# Ignore part of Hugo build process
+.hugo_build.lock
+
+# Resource generation cache for building
+resources

@@ -1,0 +1,8 @@
+[submodule "public"]
+	path = public
+	url = git@github.com:stvleung/stvleung.github.io.git
+	branch = main
+[submodule "themes/newsroom"]
+	path = themes/newsroom
+	url = git@github.com:stvleung/hugo-newsroom-theme.git
+	branch = master

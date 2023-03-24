@@ -1,0 +1,4 @@
+baseURL = 'https://dmvjoyland-poc.stevenleung.dev/'
+languageCode = 'en-us'
+title = 'DMV Joyland'
+theme = 'newsroom'
