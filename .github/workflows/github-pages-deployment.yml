@@ -1,0 +1,41 @@
+name: github-pages-deployment
+run-name: deploy by ${{ github.actor }} from ${{ github.ref_name }}
+on:
+  push:
+    branches:
+      - main
+env:
+  HUGO_RELEASE_URL: https://github.com/gohugoio/hugo/releases/download/v0.111.3/hugo_extended_0.111.3_linux-amd64.deb
+jobs:
+  deployment:
+    runs-on: ubuntu-latest
+    environment: production
+    permissions: write-all
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GH_ACTIONS_PAT }}
+          submodules: recursive
+      - name: Install Hugo
+        run: |
+          sudo apt-get update
+          sudo apt-get install python3-pygments
+          sudo wget -qO hugo_linux-amd64.deb $HUGO_RELEASE_URL
+          sudo dpkg -i hugo_linux-amd64.deb
+      - name: Build with Hugo
+        run: hugo
+      - name: Push and deploy public build
+        run: |
+          git config --global user.name github-actions
+          git config --global user.email github-actions@github.com
+
+          AUTHOR_NAME=$(git show --no-patch --format="%aN" HEAD)
+          AUTHOR_EMAIL=$(git show --no-patch --format="%aE" HEAD)
+          GH_PAGES_BRANCH=$(git submodule status -- public | awk 'match($0,/heads\/([[:alnum:]]+)/,m){print m[1]}')
+
+          cd public
+          git add .
+          git status
+          git commit --author "$AUTHOR_NAME <$AUTHOR_EMAIL>" -m 'Site push by GitHub Actions'
+          git push origin HEAD:refs/heads/$GH_PAGES_BRANCH
