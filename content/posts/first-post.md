@@ -2,7 +2,7 @@
 title: "DMV Joyland Blog Kickoff!"
 date: 2023-03-23T23:23:53-04:00
 image: 'welcome-to-joyland.gif'
-draft: true
+draft: false
 ---
 ## Welcome to our new blog!
 
